@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<ul>
+    <ul>
+        <!-- 定义路由 -->
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/about">about</a></li>
+
+        <!-- 渲染路由对应的 UI -->
+        <div id="routeView"></div>
+    </ul>
+</ul>
+</body>
+<script>
+    let routerView = routeView
+    window.addEventListener('hashchange', ()=>{
+        let hash = location.hash;
+        routerView.innerHTML = hash
+    })
+    window.addEventListener('DOMContentLoaded', ()=>{
+        if(!location.hash){//如果不存在hash值，那么重定向到#/
+            location.hash="/"
+        }else{//如果存在hash值，那就渲染对应UI
+            let hash = location.hash;
+            routerView.innerHTML = hash
+        }
+    })
+</script>
+</html>
