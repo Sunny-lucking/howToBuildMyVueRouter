@@ -252,7 +252,7 @@ export default router
 
 ```
 
-## 三、剖析VueRouter本质
+## 四、剖析VueRouter本质
   
 
 先抛出个问题，Vue项目中是怎么引入VueRouter。
@@ -304,7 +304,7 @@ export default VueRouter
 
 
 
-## 四、分析Vue.use
+## 五、分析Vue.use
 Vue.use(plugin);
 
 （1）参数
@@ -412,7 +412,7 @@ export default VueRouter
 天啊，没报错。没毛病！
 
 
-## 五、完善install方法
+## 六、完善install方法
 install 一般是给每个vue实例添加东西的 
 
 在这里就是**给每个组件添加$route和$router**。
@@ -516,7 +516,7 @@ Object.defineProperty(this,'$router',{
 
 到这里还install还没写完，可能你也发现了，$route还没实现，现在还实现不了，没有完善VueRouter的话，没办法获得当前路径
 
-## 六、完善VueRouter类
+## 七、完善VueRouter类
 我们先看看我们new VueRouter类时传进了什么东东
 
 ```js
@@ -688,7 +688,7 @@ class VueRouter{
 
 
 
-## 七、完善$route
+## 八、完善$route
 千米那我们讲到，要先实现VueRouter的history.current的时候，才能获得当前的路径，而现在已经实现了，那么就可以着手实现$route了。
 
 很简单，跟实现$router一样
@@ -731,7 +731,7 @@ VueRouter.install = function (v) {
 };
 ```
 
-## 八、完善router-view组件
+## 九、完善router-view组件
 
 现在我们已经保存了当前路径，也就是说现在我们可以获得当前路径，然后再根据当前路径从路由表中获取对应的组件进行渲染
 
@@ -796,7 +796,7 @@ path改成home
 
 
 
-## 九、完善router-link组件
+## 十、完善router-link组件
 
 我们先看下router-link是怎么使用的。
 
