@@ -1,5 +1,5 @@
 
-# 手写Vuex核心原理
+# 手写vue-router核心原理
 [toc]
 ## 一、核心原理
 ### 1.什么是前端路由？
@@ -138,7 +138,7 @@ A：也是可以的。因为不管什么模式，浏览器为保存记录都会�
 ![](https://imgkr.cn-bj.ufileos.com/31cf2ae3-623f-4378-990a-23d4c56bd287.png)
 
 
->已经把项目放到 **github**：https://github.com/Sunny-lucking/howToBuildMyVueRouter  可以卑微地要个star吗
+>已经把项目放到 **github**：https://github.com/Sunny-lucking/howToBuildMyVueRouter  可以卑微地要个star吗。**有什么不理解或者什么建议，欢迎下方评论**
 
 我们主要看下App.vue,About.vue,Home.vue,router/index.js
 
@@ -257,7 +257,7 @@ export default router
 
 先抛出个问题，Vue项目中是怎么引入VueRouter。
 
-1. 安装Vuex，再通过`import VueRouter from 'vue-router'`引入
+1. 安装VueRouter，再通过`import VueRouter from 'vue-router'`引入
 2. 先 `const router = new VueRouter({...})`,再把router作为参数的一个属性值，`new Vue({router})`
 3. 通过Vue.use(VueRouter) 使得每个组件都可以拥有store实例
 
@@ -415,12 +415,12 @@ export default VueRouter
 ## 六、完善install方法
 install 一般是给每个vue实例添加东西的 
 
-在这里就是**给每个组件添加$route和$router**。
+在这里就是**给每个组件添加`$route`和`$router`**。
 
-**$route和$router有什么区别？**
+**`$route`和`$router`有什么区别？**
 
->A：$router是VueRouter的实例对象，$route是当前路由对象，也就是说$route是$router的一个属性
-注意每个组件添加的$route是是同一个，$router也是同一个，所有组件共享的。
+>A：`$router`是VueRouter的实例对象，`$route`是当前路由对象，也就是说`$route`是`$router`的一个属性
+注意每个组件添加的`$route`是是同一个，`$router`也是同一个，所有组件共享的。
 
 这是什么意思呢？？？
 
@@ -510,11 +510,11 @@ Object.defineProperty(this,'$router',{
   }
 })
 ```
-将$router挂载到组件实例上。
+将`$router`挂载到组件实例上。
 
-其实这种思想也是一种代理的思想，我们获取组件的$router，其实返回的是根组件的`_root._router`
+其实这种思想也是一种代理的思想，我们获取组件的`$router`，其实返回的是根组件的`_root._router`
 
-到这里还install还没写完，可能你也发现了，$route还没实现，现在还实现不了，没有完善VueRouter的话，没办法获得当前路径
+到这里还install还没写完，可能你也发现了，`$route`还没实现，现在还实现不了，没有完善VueRouter的话，没办法获得当前路径
 
 ## 七、完善VueRouter类
 我们先看看我们new VueRouter类时传进了什么东东
@@ -557,7 +557,7 @@ class VueRouter{
 ```
 先接收了这两个参数。
 
-但是我们直接处理routes是十分步方便的，所以我们先要转换成`key：value`的格式
+但是我们直接处理routes是十分不方便的，所以我们先要转换成`key：value`的格式
 
 
 ```js
@@ -689,9 +689,9 @@ class VueRouter{
 
 
 ## 八、完善$route
-千米那我们讲到，要先实现VueRouter的history.current的时候，才能获得当前的路径，而现在已经实现了，那么就可以着手实现$route了。
+前面那我们讲到，要先实现VueRouter的history.current的时候，才能获得当前的路径，而现在已经实现了，那么就可以着手实现`$route`了。
 
-很简单，跟实现$router一样
+很简单，跟实现`$router`一样
 
 
 ```js
@@ -824,7 +824,104 @@ Vue.component('router-link',{
 我们把router-link渲染成a标签，当然这时最简单的做法。
 通过点击a标签就可以实现url上路径的切换。从而实现视图的重新渲染
 
-ok，到这里完成此次的项目了，现在测试下成功没
+ok，到这里完成此次的项目了。
+
+看下VueRouter的完整代码吧
+
+```js
+//myVueRouter.js
+let Vue = null;
+class HistoryRoute {
+    constructor(){
+        this.current = null
+    }
+}
+class VueRouter{
+    constructor(options) {
+        this.mode = options.mode || "hash"
+        this.routes = options.routes || [] //你传递的这个路由是一个数组表
+        this.routesMap = this.createMap(this.routes)
+        this.history = new HistoryRoute();
+        this.init()
+
+    }
+    init(){
+        if (this.mode === "hash"){
+            // 先判断用户打开时有没有hash值，没有的话跳转到#/
+            location.hash? '':location.hash = "/";
+            window.addEventListener("load",()=>{
+                this.history.current = location.hash.slice(1)
+            })
+            window.addEventListener("hashchange",()=>{
+                this.history.current = location.hash.slice(1)
+            })
+        } else{
+            location.pathname? '':location.pathname = "/";
+            window.addEventListener('load',()=>{
+                this.history.current = location.pathname
+            })
+            window.addEventListener("popstate",()=>{
+                this.history.current = location.pathname
+            })
+        }
+    }
+
+    createMap(routes){
+        return routes.reduce((pre,current)=>{
+            pre[current.path] = current.component
+            return pre;
+        },{})
+    }
+
+}
+VueRouter.install = function (v) {
+    Vue = v;
+    Vue.mixin({
+        beforeCreate(){
+            if (this.$options && this.$options.router){ // 如果是根组件
+                this._root = this; //把当前实例挂载到_root上
+                this._router = this.$options.router;
+                Vue.util.defineReactive(this,"xxx",this._router.history)
+            }else { //如果是子组件
+                this._root= this.$parent && this.$parent._root
+            }
+            Object.defineProperty(this,'$router',{
+                get(){
+                    return this._root._router
+                }
+            });
+            Object.defineProperty(this,'$route',{
+                get(){
+                    return this._root._router.history.current
+                }
+            })
+        }
+    })
+    Vue.component('router-link',{
+        props:{
+            to:String
+        },
+        render(h){
+            let mode = this._self._root._router.mode;
+            let to = mode === "hash"?"#"+this.to:this.to
+            return h('a',{attrs:{href:to}},this.$slots.default)
+        }
+    })
+    Vue.component('router-view',{
+        render(h){
+            let current = this._self._root._router.history.current
+            let routeMap = this._self._root._router.routesMap;
+            return h(routeMap[current])
+        }
+    })
+};
+
+export default VueRouter
+```
+
+
+
+现在测试下成功没
 
 ![](https://imgkr.cn-bj.ufileos.com/45dece90-42c2-4c89-b8fd-2d2b80f302d0.png)
 |
@@ -834,5 +931,10 @@ ok，到这里完成此次的项目了，现在测试下成功没
 
 完美收官！！！！
 
+有什么不理解或者什么建议，欢迎下方评论
+
 感谢您也恭喜您看到这里，我可以卑微的求个star吗！！！
->github：https://github.com/Sunny-lucking/howToBuildMyWebpack
+
+>github：https://github.com/Sunny-lucking/howToBuildMyVueRouter
+
+>参考文献：文章前面一、二节原理部分 摘自：https://blog.csdn.net/qq867263657/article/details/90903491
