@@ -1,6 +1,5 @@
-
 # 手写vue-router核心原理
-[toc]
+@[toc]
 ## 一、核心原理
 ### 1.什么是前端路由？
 在 Web 前端单页应用 SPA(Single Page Application)中，路由描述的是 URL 与 UI 之间的映射关系，这种映射是单向的，即 URL 变化引起 UI 更新（无需刷新页面）。
@@ -127,7 +126,7 @@ A：也是可以的。因为不管什么模式，浏览器为保存记录都会�
 
 
 
-![](https://imgkr.cn-bj.ufileos.com/f37d83eb-14c7-4587-972b-bbd3c3721941.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS9mMzdkODNlYi0xNGM3LTQ1ODctOTcyYi1iYmQzYzM3MjE5NDEucG5n?x-oss-process=image/format,png)
 
 
 
@@ -135,7 +134,7 @@ A：也是可以的。因为不管什么模式，浏览器为保存记录都会�
   
 
 
-![](https://imgkr.cn-bj.ufileos.com/31cf2ae3-623f-4378-990a-23d4c56bd287.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS8zMWNmMmFlMy02MjNmLTQzNzgtOTkwYS0yM2Q0YzU2YmQyODcucG5n?x-oss-process=image/format,png)
 
 
 >已经把项目放到 **github**：https://github.com/Sunny-lucking/howToBuildMyVueRouter  可以卑微地要个star吗。**有什么不理解或者什么建议，欢迎下方评论**
@@ -208,7 +207,7 @@ About.vue
 
 
 
-![](https://imgkr.cn-bj.ufileos.com/d5efab6b-ead9-4b33-9f3c-6cd1f65f1366.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS9kNWVmYWI2Yi1lYWQ5LTRiMzMtOWYzYy02Y2QxZjY1ZjEzNjYucG5n?x-oss-process=image/format,png)
 
 
 
@@ -220,7 +219,7 @@ ok，没毛病，初始化成功。
 
 
 
-![](https://imgkr.cn-bj.ufileos.com/92be9940-b799-45db-8bf0-c9cca4d567a5.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS85MmJlOTk0MC1iNzk5LTQ1ZGItOGJmMC1jOWNjYTRkNTY3YTUucG5n?x-oss-process=image/format,png)
 
 
 再将VueRouter引入 改成我们的myVueRouter.js
@@ -407,7 +406,7 @@ export default VueRouter
 我们执行下项目，如果没报错，说明我们的假设没毛病。
 
 
-![](https://imgkr.cn-bj.ufileos.com/5f1f1e3a-b3cb-4bfd-bb3a-bafa7f1066c7.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS81ZjFmMWUzYS1iM2NiLTRiZmQtYmIzYS1iYWZhN2YxMDY2YzcucG5n?x-oss-process=image/format,png)
 
 天啊，没报错。没毛病！
 
@@ -595,7 +594,7 @@ const routes = [
 ```
 转换成
 
-![](https://imgkr.cn-bj.ufileos.com/42d47a33-5e54-4b74-92db-a4dd7774f434.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS80MmQ0N2EzMy01ZTU0LTRiNzQtOTJkYi1hNGRkNzc3NGY0MzQucG5n?x-oss-process=image/format,png)
 
 路由中需要存放当前的路径，来表示当前的路径状态
 为了方便管理，可以用一个对象来表示
@@ -785,12 +784,12 @@ Vue.mixin({
 
 好了，现在我们来测试一下，通过改变url上的值，能不能触发router-view的重新渲染
 
-![](https://imgkr.cn-bj.ufileos.com/6663e8c4-a013-4d0b-bb96-36865e0fd3fd.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS82NjYzZThjNC1hMDEzLTRkMGItYmI5Ni0zNjg2NWUwZmQzZmQucG5n?x-oss-process=image/format,png)
 
 path改成home
 
 
-![](https://imgkr.cn-bj.ufileos.com/ecc6cade-a4d7-423f-838a-f5d7a0c311b4.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS9lY2M2Y2FkZS1hNGQ3LTQyM2YtODM4YS1mNWQ3YTBjMzExYjQucG5n?x-oss-process=image/format,png)
 
 可见成功实现了当前路径的监听。。
 
@@ -923,10 +922,10 @@ export default VueRouter
 
 现在测试下成功没
 
-![](https://imgkr.cn-bj.ufileos.com/45dece90-42c2-4c89-b8fd-2d2b80f302d0.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS80NWRlY2U5MC00MmMyLTRjODktYjhmZC0yZDJiODBmMzAyZDAucG5n?x-oss-process=image/format,png)
 |
 
-![](https://imgkr.cn-bj.ufileos.com/eadbace4-552e-498c-8b9c-748dbc280759.png)
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS9lYWRiYWNlNC01NTJlLTQ5OGMtOGI5Yy03NDhkYmMyODA3NTkucG5n?x-oss-process=image/format,png)
 点击确实视图切换了，成功。
 
 完美收官！！！！
